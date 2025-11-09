@@ -5,17 +5,17 @@
 ini_set("display_errors", 1);
 header('Content-Type: text/html; charset=iso-8859-1');
 
-echo 'Versao Atual do PHP: ' . phpversion() . '<br>';
+echo 'Versão Atual do PHP: ' . phpversion() . '<br>';
 
-$servername = "54.234.153.24"; // IP do container MySQL
-$username = "root";
-$password = "Senha123";
+$servername = "mysql"; // nome do serviço no docker-compose
+$username = "joao";
+$password = "senha123";
 $database = "meubanco";
 
 $link = new mysqli($servername, $username, $password, $database);
 
 if (mysqli_connect_errno()) {
-    printf("Connect failed: %s\n", mysqli_connect_error());
+    printf("Falha na conexão: %s\n", mysqli_connect_error());
     exit();
 }
 
@@ -26,9 +26,9 @@ $host_name = gethostname();
 $query = "INSERT INTO dados (AlunoID, Nome, Sobrenome, Endereco, Cidade, Host) VALUES ('$valor_rand1', '$valor_rand2', '$valor_rand2', '$valor_rand2', '$valor_rand2','$host_name')";
 
 if ($link->query($query) === TRUE) {
-  echo "New record created successfully";
+  echo "Novo registro criado com sucesso";
 } else {
-  echo "Error: " . $link->error;
+  echo "Erro: " . $link->error;
 }
 ?>
 </body>
