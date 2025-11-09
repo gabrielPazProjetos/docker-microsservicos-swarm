@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "8080:80"
+    networks:
+      - app_net
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: senha123
+      MYSQL_DATABASE: meubanco
+      MYSQL_USER: joao
+      MYSQL_PASSWORD: senha123
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app_net
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "4500:4500"
+    depends_on:
+      - app
+    networks:
+      - app_net
+
+networks:
+  app_net:
